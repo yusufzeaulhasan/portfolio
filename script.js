@@ -36,15 +36,53 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar background change on scroll
+// Consolidated scroll handler with throttling
 const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+let ticking = false;
+
+function handleScroll() {
+    const scrolled = window.pageYOffset;
+    
+    // Navbar background change
+    if (scrolled > 50) {
         navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
         navbar.style.backdropFilter = 'blur(10px)';
     } else {
         navbar.style.backgroundColor = '#ffffff';
         navbar.style.backdropFilter = 'none';
+    }
+    
+    // Active navigation links
+    let current = '';
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrolled >= sectionTop - 100) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Parallax effect for hero section
+    const hero = document.querySelector('.hero-content');
+    if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        hero.style.opacity = 1 - scrolled / 500;
+    }
+    
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
     }
 });
 
@@ -87,36 +125,7 @@ document.querySelectorAll('.timeline-item').forEach((item, index) => {
     observer.observe(item);
 });
 
-// Add active state to navigation links based on scroll position
-window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= sectionTop - 100) {
-            current = section.getAttribute('id');
-        }
-    });
 
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero-content');
-    const scrolled = window.pageYOffset;
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        hero.style.opacity = 1 - scrolled / 500;
-    }
-});
 
 // Add typing effect to hero title (optional enhancement)
 const heroTitle = document.querySelector('.hero-title');
@@ -138,10 +147,10 @@ if (heroTitle) {
 }
 
 // Dynamic year in footer
-const yearElement = document.querySelector('.footer p');
-if (yearElement) {
-    const currentYear = new Date().getFullYear();
-    yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+const currentYear = new Date().getFullYear();
+const footerParagraphs = document.querySelectorAll('.footer p');
+if (footerParagraphs.length > 0) {
+    footerParagraphs[0].textContent = `© ${currentYear} Yusuf Zeaul Hasan. All rights reserved.`;
 }
 
 // Add hover effect to skill tags
