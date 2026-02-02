@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MEMS Sensor Test Platform | Yusuf Hasan</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="topbar">
+        <div>
+          <h1>MEMS Sensor Test Platform</h1>
+          <p class="subtitle">Next-generation IMU evaluation • high-rate data capture • bring-up</p>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#projects">← Back</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="card">
+        <h3>Overview</h3>
+        <p>
+          Designed and brought up MCU-based sensor test and data-collection PCBs with onboard memory, DMA-driven
+          acquisition, and multiple communication interfaces to evaluate prototype MEMS inertial sensors at
+          &gt;12.8 kHz.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Constraints</h3>
+          <ul class="bullets">
+            <li>High throughput without data loss</li>
+            <li>Multiple sensor variants + changing requirements</li>
+            <li>Flexible interfaces for lab + automation</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Architecture</h3>
+          <ul class="bullets">
+            <li>Onboard memory + SD logging</li>
+            <li>Interfaces: FDCAN, SPI, I²C, UART, USB3300</li>
+            <li>DMA pipelines + robust error handling</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Results</h3>
+          <ul class="bullets">
+            <li>Repeatable high-rate evaluation workflow</li>
+            <li>Validated multiple sensors concurrently</li>
+            <li>Enabled downstream noise characterization</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Evidence (add later)</h3>
+        <ul class="bullets">
+          <li>Board photos (front/back)</li>
+          <li>Block diagram + interface map</li>
+          <li>Sample plots: Allan deviation, PSD, throughput logs</li>
+          <li>Short bring-up checklist (power rails, clocks, interfaces)</li>
+        </ul>
+        <p class="small-note">
+          If you can’t share sensitive details, you can still share architecture diagrams, anonymized screenshots,
+          and high-level performance results.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Yusuf Hasan</p>
+    </div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
