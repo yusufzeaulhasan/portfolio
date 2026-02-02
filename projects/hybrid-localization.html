@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hybrid Indoor Localization (IMU + UWB) | Yusuf Hasan</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="topbar">
+        <div>
+          <h1>Hybrid Indoor Localization (IMU + UWB)</h1>
+          <p class="subtitle">ESKF sensor fusion • asynchronous ranging • embedded implementation</p>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#projects">← Back</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="card">
+        <h3>Overview</h3>
+        <p>
+          Built a real-time indoor localization system that fuses high-rate IMU data with UWB ranging updates
+          using an Error-State Kalman Filter (ESKF). The goal is robust tracking in GNSS-denied environments
+          with practical timing constraints and intermittent measurements.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Constraints</h3>
+          <ul class="bullets">
+            <li>IMU runs faster than UWB (mixed-rate updates)</li>
+            <li>UWB ranges arrive asynchronously per anchor</li>
+            <li>Need stable estimation under packet drops/outliers</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Approach</h3>
+          <ul class="bullets">
+            <li>Nominal state: position/velocity; attitude as quaternion</li>
+            <li>Error-state: \u03B4p, \u03B4v, \u03B4\u03B8 with ESKF updates</li>
+            <li>Per-measurement update: apply UWB correction as each range arrives</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>System</h3>
+          <ul class="bullets">
+            <li>4 anchors + mobile tag (UWB TWR ranging)</li>
+            <li>Embedded fusion loop with deterministic scheduling</li>
+            <li>Logging + offline evaluation in Python/MATLAB</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Implementation Details (what to show)</h3>
+        <ul class="bullets">
+          <li><strong>Filter loop:</strong> IMU predict at fixed rate; UWB update on arrival (one update per anchor range)</li>
+          <li><strong>Outlier handling:</strong> gating with innovation \u03C7\u00B2 threshold (or simple residual limit)</li>
+          <li><strong>Time alignment:</strong> timestamp each measurement; propagate to measurement time before update</li>
+          <li><strong>Outputs:</strong> position, velocity, attitude; optional bias states if you add them later</li>
+        </ul>
+        <p class="small-note">
+          If any details are sensitive, you can still share block diagrams, timing charts, and anonymized plots.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Evidence (add later)</h3>
+        <ul class="bullets">
+          <li>Block diagram of IMU predict + UWB update</li>
+          <li>Room layout diagram (anchor positions + tag path)</li>
+          <li>Plots: position error vs time, residuals, update rate</li>
+          <li>Short video/gif of trajectory overlay (optional)</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Yusuf Hasan</p>
+    </div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
