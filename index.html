@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yusuf Hasan | Engineering Portfolio</title>
+  <meta name="description" content="Engineering portfolio: embedded systems, sensor fusion, PCB design, controls." />
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="topbar">
+        <div>
+          <h1>Yusuf Hasan</h1>
+          <p class="subtitle">Electrical Engineering • Embedded Systems • Sensor Fusion • PCB Design</p>
+        </div>
+        <nav class="nav">
+          <a href="#projects">Projects</a>
+          <a href="#research">Research</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+
+      <div class="hero">
+        <p>
+          I’m a UBC Electrical Engineering student with experience designing embedded hardware, firmware,
+          and data analysis pipelines for sensing and control systems. I previously worked at Bosch on
+          next-generation MEMS inertial sensors and currently support RF propagation experiments at UBC.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button" href="#projects">View projects</a>
+          <a class="button button-secondary" href="assets/Yusuf_Hasan_Resume.pdf" target="_blank" rel="noopener">
+            Resume (PDF)
+          </a>
+          <a class="button button-secondary" href="https://www.linkedin.com/in/yusuf-hasan-ubceleceng2026" target="_blank" rel="noopener">
+            LinkedIn
+          </a>
+        </div>
+
+        <div class="quick-facts">
+          <div class="pill">Embedded C • STM32 • DMA/ISR</div>
+          <div class="pill">PCB: Altium • KiCad • Mixed-signal</div>
+          <div class="pill">Python/MATLAB • Sensor noise • Allan deviation</div>
+          <div class="pill">UWB + IMU • ESKF / Estimation</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="section-title">
+        <h2>Projects</h2>
+        <p>Selected work with a focus on architecture decisions, constraints, and results.</p>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>High-Speed MEMS Sensor Test Platform</h3>
+          <p class="meta">Altium • STM32 • C • Python/MATLAB • USB3300 • FDCAN/SPI/I²C/UART</p>
+          <p>
+            Designed and brought up MCU-based sensor test/data-collection PCBs with onboard memory,
+            high-speed interfaces, DMA pipelines, and SD logging to evaluate next-generation MEMS inertial
+            sensors at &gt;12.8 kHz.
+          </p>
+          <div class="card-actions">
+            <a class="link" href="projects/mems-test-platform.html">Read the case study →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Hybrid Indoor Localization (IMU + UWB)</h3>
+          <p class="meta">C • Python • ESKF • DWM3000 • PCB Design • Robotics</p>
+          <p>
+            Built a real-time localization system fusing IMU predictions with UWB ranging updates using
+            an Error-State Kalman Filter (ESKF). Designed supporting hardware and timing strategy for
+            asynchronous measurements.
+          </p>
+          <div class="card-actions">
+            <a class="link" href="projects/hybrid-localization.html">Read the case study →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Two-Stage CMOS Operational Amplifier</h3>
+          <p class="meta">Cadence Virtuoso • 45 nm • Analog IC Design</p>
+          <p>
+            Designed and simulated a two-stage op-amp with fully differential first stage + CMFB and
+            common-source second stage. Verified stability and transient behavior under constraints.
+          </p>
+          <div class="card-actions">
+            <a class="link" href="projects/cmos-opamp.html">Read the case study →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>2-DoF Laser Projector System</h3>
+          <p class="meta">Embedded C • SystemVerilog • Altium • Control</p>
+          <p>
+            Built a motor-controlled laser projector with FPGA logic decode + ESP32 firmware for SPI
+            coordination and closed-loop control.
+          </p>
+          <div class="card-actions">
+            <a class="link" href="projects/laser-projector.html">Read the case study →</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research" class="section">
+      <div class="section-title">
+        <h2>Research</h2>
+        <p>Academic work and lab contributions.</p>
+      </div>
+
+      <div class="card">
+        <h3>Undergraduate Research Assistant — Radio Science Laboratory (UBC)</h3>
+        <p class="meta">WSPR • HF propagation • field deployment • signal analysis</p>
+        <ul class="bullets">
+          <li>Configured, tested, and monitored WSPR transmitters for long-range HF propagation experiments.</li>
+          <li>Supported maritime deployment of payloads for ionospheric/propagation studies.</li>
+          <li>Assisted with data collection and analysis across varying environmental conditions.</li>
+        </ul>
+        <p class="small-note">
+          (Add links here later: posters, reports, dataset snapshots, or a short write-up.)
+        </p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="section-title">
+        <h2>Skills</h2>
+        <p>Tools and technical strengths.</p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Embedded & Firmware</h3>
+          <ul class="bullets">
+            <li>C, interrupts/ISRs, DMA, real-time data capture</li>
+            <li>STM32 tooling (CubeIDE), debugging, instrumentation</li>
+            <li>Interfaces: SPI, I²C, UART, FDCAN, USB</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Hardware & PCB</h3>
+          <ul class="bullets">
+            <li>Altium, KiCad, 4–6 layer boards</li>
+            <li>Mixed-signal layout, power regulation, bring-up</li>
+            <li>High-speed data paths & signal integrity basics</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Modeling & Analysis</h3>
+          <ul class="bullets">
+            <li>Python/MATLAB for sensor characterization</li>
+            <li>Allan deviation, noise modeling, data pipelines</li>
+            <li>Estimation: ESKF, sensor fusion concepts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-title">
+        <h2>Contact</h2>
+        <p>Reach out for internships, research roles, or collaborations.</p>
+      </div>
+
+      <div class="card">
+        <ul class="contact-list">
+          <li><strong>Email:</strong> <a href="mailto:yusuf.zeaul.hasan@gmail.com">yusuf.zeaul.hasan@gmail.com</a></li>
+          <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/yusuf-hasan-ubceleceng2026" target="_blank" rel="noopener">linkedin.com/in/yusuf-hasan-ubceleceng2026</a></li>
+          <li><strong>GitHub:</strong> <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noopener">github.com/YOUR_GITHUB_USERNAME</a></li>
+        </ul>
+        <p class="small-note">
+          Tip: Add your resume PDF as <code>assets/Yusuf_Hasan_Resume.pdf</code> so the button works.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Yusuf Hasan • Built with GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
