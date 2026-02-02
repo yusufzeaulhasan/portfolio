@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Two-Stage CMOS Op-Amp | Yusuf Hasan</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="topbar">
+        <div>
+          <h1>Two-Stage CMOS Operational Amplifier</h1>
+          <p class="subtitle">Cadence Virtuoso • 45 nm • stability + performance verification</p>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#projects">← Back</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="card">
+        <h3>Overview</h3>
+        <p>
+          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using Cadence Virtuoso.
+          Implemented a fully differential first stage with common-mode feedback (CMFB) and a common-source second stage.
+          Verified DC, AC, and transient performance including stability and slew behavior.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Target Specs</h3>
+          <ul class="bullets">
+            <li>High unity-gain bandwidth (UGB)</li>
+            <li>Reasonable phase margin for stability</li>
+            <li>Low power under process constraints</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Architecture</h3>
+          <ul class="bullets">
+            <li>Stage 1: fully differential input stage</li>
+            <li>CMFB loop for stable output common-mode</li>
+            <li>Stage 2: common-source gain stage</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Results</h3>
+          <ul class="bullets">
+            <li>47.5 dB DC gain</li>
+            <li>616 MHz unity-gain frequency</li>
+            <li>61\u00B0 phase margin</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Verification (what to show)</h3>
+        <ul class="bullets">
+          <li><strong>DC:</strong> bias points, operating regions, output swing</li>
+          <li><strong>AC:</strong> open-loop gain/phase, UGB, phase margin, poles/zeros</li>
+          <li><strong>Transient:</strong> step response, settling time, overshoot</li>
+          <li><strong>Slew:</strong> large-signal behavior under load</li>
+        </ul>
+        <p class="small-note">
+          Add screenshots of key plots (Bode, step response, slew) with brief captions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Evidence (add later)</h3>
+        <ul class="bullets">
+          <li>Schematic + labeled stages (blur sensitive identifiers if needed)</li>
+          <li>Bode plot with UGB and phase margin annotated</li>
+          <li>Step response plot (small and large signal)</li>
+          <li>Table of final device sizes and bias currents (optional)</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Yusuf Hasan</p>
+    </div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
