@@ -6,13 +6,16 @@
   <title>2-DoF Laser Projector System | Yusuf Hasan</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container">
       <div class="topbar">
         <div>
           <h1>2-DoF Laser Projector System</h1>
-          <p class="subtitle">Embedded control • SystemVerilog logic • ESP32 firmware • PID</p>
+          <p class="subtitle">
+            Embedded control • PID tuning • quadrature decoding • system integration
+          </p>
         </div>
         <nav class="nav">
           <a href="../index.html#projects">← Back</a>
@@ -24,63 +27,122 @@
 
   <main class="container">
     <section class="section">
+
+      <!-- OVERVIEW -->
       <div class="card">
         <h3>Overview</h3>
         <p>
-          Collaborated on a 2-DoF motor-controlled laser projection system capable of rendering still images
-          and animations. The system combined embedded firmware on an ESP32 with digital logic in SystemVerilog
-          to support closed-loop control and timing-accurate coordination.
+          Designed and implemented a two-degree-of-freedom (2-DoF) laser projection system capable of
+          rendering static shapes and dynamic animations. The system combines embedded firmware,
+          digital signal decoding, and closed-loop motor control to accurately steer a laser beam
+          in two axes.
+        </p>
+        <p>
+          This project emphasized real-time control, feedback processing, and end-to-end system
+          integration across hardware and software boundaries.
         </p>
       </div>
 
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Challenges</h3>
-          <ul class="bullets">
-            <li>Achieve stable closed-loop motor control</li>
-            <li>Coordinate real-time timing between MCU and logic</li>
-            <li>Produce repeatable projection trajectories</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>System</h3>
-          <ul class="bullets">
-            <li>ESP32 firmware with ISR-based scheduling</li>
-            <li>SPI link to digital logic decoder</li>
-            <li>2-axis actuation + trajectory generation</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>Outcome</h3>
-          <ul class="bullets">
-            <li>Projected multiple animations in real time</li>
-            <li>Implemented PID control loop tuning</li>
-            <li>Validated end-to-end system integration</li>
-          </ul>
-        </div>
-      </div>
-
+      <!-- SYSTEM ARCHITECTURE -->
       <div class="card">
-        <h3>What you can show (portfolio-safe)</h3>
+        <h3>System Architecture</h3>
+        <p>
+          The system consists of two motor-driven axes controlling the laser’s horizontal and vertical
+          position. An embedded microcontroller executes the control loop, while quadrature encoders
+          provide position feedback. The controller computes actuation commands using a PID control
+          law to track desired trajectories.
+        </p>
+
         <ul class="bullets">
-          <li>High-level block diagram: trajectory → controller → motors → feedback</li>
-          <li>Timing diagram: ISR cadence, SPI transactions, control updates</li>
-          <li>PID tuning notes: step response, overshoot/settling improvements</li>
-          <li>Short demo video or gif of projected shapes/animations</li>
+          <li>ESP32 microcontroller running real-time control firmware</li>
+          <li>Two-axis actuation with quadrature encoder feedback</li>
+          <li>SPI communication with external digital logic for decoding and timing</li>
+          <li>Interrupt-driven control loop execution</li>
         </ul>
       </div>
 
+      <!-- HARDWARE -->
       <div class="card">
-        <h3>Evidence (add later)</h3>
+        <h3>Hardware Implementation</h3>
+        <p>
+          A custom mechanical assembly was designed to mount the laser and actuators, providing
+          stable and repeatable motion. Encoder feedback enables precise measurement of shaft position
+          and velocity, which is essential for closed-loop control.
+        </p>
+
+        <p><strong>Physical System:</strong> Real-world laser projector prototype.</p>
+        <img
+          src="images/laser_image.jpg"
+          alt="Physical laser projector system"
+          class="evidence-image"
+        >
+
+        <p><strong>Mechanical Design:</strong> Structural layout used to align actuators and optics.</p>
+        <img
+          src="images/mech_design.png"
+          alt="Mechanical design of laser projector"
+          class="evidence-image"
+        >
+      </div>
+
+      <!-- CONTROL AND SIGNAL PROCESSING -->
+      <div class="card">
+        <h3>Control and Signal Processing</h3>
+        <p>
+          Quadrature encoder signals are decoded to determine position and direction of motion.
+          The decoded position is fed into a discrete-time PID controller implemented on the ESP32.
+          Controller gains were tuned experimentally to balance responsiveness, stability, and
+          tracking accuracy.
+        </p>
+
+        <div class="evidence-grid">
+          <img
+            src="images/decoding_quadrature_encoder.png"
+            alt="Quadrature encoder decoding"
+          >
+          <img
+            src="images/PID_Controller.png"
+            alt="PID controller structure"
+          >
+        </div>
+
         <ul class="bullets">
-          <li>System photos (laser/motors/controller)</li>
-          <li>Logic diagram or FSM summary (SystemVerilog)</li>
-          <li>Plots: command vs measured position, error vs time</li>
-          <li>Brief README: how to run + key design decisions</li>
+          <li>Interrupt-based encoder decoding for accurate position tracking</li>
+          <li>Discrete-time PID control with adjustable gains</li>
+          <li>Closed-loop control verified through step and trajectory responses</li>
         </ul>
       </div>
+
+      <!-- RESULTS -->
+      <div class="card">
+        <h3>Results and Demonstration</h3>
+        <p>
+          The system successfully projected a variety of shapes and animations by following
+          time-varying reference trajectories. Stable closed-loop behavior was achieved after
+          controller tuning, with minimal overshoot and consistent tracking across both axes.
+        </p>
+
+        <p>
+          A short demonstration video captures the system projecting dynamic patterns in real time.
+        </p>
+
+        <video controls class="evidence-video">
+          <source src="images/video.mov" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="card">
+        <h3>Summary</h3>
+        <ul class="bullets">
+          <li>Designed and built a functional 2-DoF laser projection system</li>
+          <li>Implemented real-time quadrature decoding and PID control</li>
+          <li>Integrated mechanical, electrical, and firmware components</li>
+          <li>Demonstrated stable closed-loop performance through real-world testing</li>
+        </ul>
+      </div>
+
     </section>
   </main>
 
@@ -89,6 +151,9 @@
       <p>© <span id="year"></span> Yusuf Hasan</p>
     </div>
   </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
