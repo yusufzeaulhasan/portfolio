@@ -43,21 +43,29 @@
       </div>
 
       <!-- ARCHITECTURE -->
-      <div class="card">
-        <h3>Architecture</h3>
-        <p>
-          The op-amp employs a two-stage topology. The first stage is a fully differential input pair that provides
-          the majority of the voltage gain while enabling high common-mode rejection. A dedicated CMFB circuit
-          stabilizes the output common-mode voltage of the differential stage. The second stage is a single-ended
-          common-source amplifier that boosts gain and drives the load.
-        </p>
+     <div class="card">
+  <h3>Overall Topology</h3>
 
-        <img
-          src="images/image.png"
-          alt="Two-stage CMOS op-amp schematic"
-          class="evidence-image"
-        >
-      </div>
+  <p>
+    The amplifier follows a two-stage CMOS operational amplifier topology consisting of a
+    fully differential first stage with common-mode feedback (CMFB), followed by a
+    single-ended common-source second stage. This structure was selected to achieve
+    high open-loop gain, wide bandwidth, and robust closed-loop stability.
+  </p>
+
+  <img
+    src="images/OPAMP_topology.png"
+    alt="Overall two-stage CMOS op-amp topology"
+    class="evidence-image"
+  >
+
+  <p>
+    The first stage provides the majority of the voltage gain and common-mode rejection,
+    while the CMFB loop regulates the output common-mode voltage. The second stage
+    increases output swing and drives the load, enabling stable operation at unity gain.
+  </p>
+</div>
+
 
       <!-- BIASING AND OPERATING POINTS -->
       <div class="card">
