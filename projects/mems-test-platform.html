@@ -3,16 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MEMS Sensor Test Platform | Yusuf Hasan</title>
+  <title>High-Speed MEMS Sensor Test Platform | Yusuf Hasan</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container">
       <div class="topbar">
         <div>
-          <h1>MEMS Sensor Test Platform</h1>
-          <p class="subtitle">Next-generation IMU evaluation • high-rate data capture • bring-up</p>
+          <h1>High-Speed MEMS Sensor Test Platform</h1>
+          <p class="subtitle">
+            Embedded hardware bring-up • high-rate data acquisition • sensor characterization
+          </p>
         </div>
         <nav class="nav">
           <a href="../index.html#projects">← Back</a>
@@ -24,55 +27,91 @@
 
   <main class="container">
     <section class="section">
+
+      <!-- OVERVIEW -->
       <div class="card">
         <h3>Overview</h3>
         <p>
-          Designed and brought up MCU-based sensor test and data-collection PCBs with onboard memory, DMA-driven
-          acquisition, and multiple communication interfaces to evaluate prototype MEMS inertial sensors at
-          &gt;12.8 kHz.
+          Designed and brought up MCU-based sensor test and data-collection platforms to evaluate
+          next-generation MEMS inertial sensors at sampling rates exceeding 12.8 kHz. The platform
+          was developed for internal characterization and validation workflows and emphasized
+          flexibility, throughput, and measurement integrity.
+        </p>
+        <p>
+          Due to the proprietary nature of this work, implementation details and hardware artifacts
+          cannot be publicly disclosed.
         </p>
       </div>
 
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Constraints</h3>
-          <ul class="bullets">
-            <li>High throughput without data loss</li>
-            <li>Multiple sensor variants + changing requirements</li>
-            <li>Flexible interfaces for lab + automation</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Architecture</h3>
-          <ul class="bullets">
-            <li>Onboard memory + SD logging</li>
-            <li>Interfaces: FDCAN, SPI, I²C, UART, USB3300</li>
-            <li>DMA pipelines + robust error handling</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Results</h3>
-          <ul class="bullets">
-            <li>Repeatable high-rate evaluation workflow</li>
-            <li>Validated multiple sensors concurrently</li>
-            <li>Enabled downstream noise characterization</li>
-          </ul>
-        </div>
-      </div>
-
+      <!-- DESIGN CONSTRAINTS -->
       <div class="card">
-        <h3>Evidence (add later)</h3>
+        <h3>Design Constraints</h3>
         <ul class="bullets">
-          <li>Board photos (front/back)</li>
-          <li>Block diagram + interface map</li>
-          <li>Sample plots: Allan deviation, PSD, throughput logs</li>
-          <li>Short bring-up checklist (power rails, clocks, interfaces)</li>
+          <li>Support multiple prototype sensors with evolving interfaces</li>
+          <li>Sustain high-throughput data capture without loss</li>
+          <li>Enable both real-time streaming and onboard logging</li>
+          <li>Provide robust timing and synchronization for sensor evaluation</li>
         </ul>
-        <p class="small-note">
-          If you can’t share sensitive details, you can still share architecture diagrams, anonymized screenshots,
-          and high-level performance results.
-        </p>
       </div>
+
+      <!-- SYSTEM ARCHITECTURE -->
+      <div class="card">
+        <h3>System Architecture</h3>
+        <p>
+          The platform centered around an MCU-based architecture with onboard memory and DMA-driven
+          data acquisition pipelines. Multiple communication interfaces were implemented to support
+          flexible integration with laboratory equipment and automated test setups.
+        </p>
+
+        <ul class="bullets">
+          <li>MCU-based control and acquisition firmware written in C</li>
+          <li>Onboard memory and SD card storage for high-rate logging</li>
+          <li>DMA-based data movement to minimize CPU overhead</li>
+          <li>Interfaces including FDCAN, SPI, I²C, UART, and USB3300 high-speed USB</li>
+        </ul>
+      </div>
+
+      <!-- FIRMWARE -->
+      <div class="card">
+        <h3>Firmware and Data Pipeline</h3>
+        <p>
+          Firmware was designed to support concurrent acquisition from multiple sensors while maintaining
+          deterministic timing. Interrupt-driven control paths were combined with DMA transfers to
+          achieve reliable high-rate sampling.
+        </p>
+
+        <ul class="bullets">
+          <li>Configurable sensor drivers for rapid evaluation of new devices</li>
+          <li>Real-time streaming to host systems for live monitoring</li>
+          <li>Buffered logging for long-duration characterization runs</li>
+        </ul>
+      </div>
+
+      <!-- ANALYSIS -->
+      <div class="card">
+        <h3>Data Analysis and Characterization</h3>
+        <p>
+          Captured sensor data was analyzed offline using Python and MATLAB to extract noise and
+          performance metrics relevant to inertial navigation and compassing applications.
+        </p>
+
+        <ul class="bullets">
+          <li>Allan deviation analysis for bias instability and noise density</li>
+          <li>Time- and frequency-domain inspection of sensor outputs</li>
+          <li>Cross-sensor comparison under identical excitation conditions</li>
+        </ul>
+      </div>
+
+      <!-- OUTCOMES -->
+      <div class="card">
+        <h3>Outcomes</h3>
+        <ul class="bullets">
+          <li>Validated performance of multiple next-generation MEMS IMUs</li>
+          <li>Enabled repeatable, high-rate sensor characterization workflows</li>
+          <li>Contributed measurement methodology and results to internal research and publications</li>
+        </ul>
+      </div>
+
     </section>
   </main>
 
@@ -81,6 +120,9 @@
       <p>© <span id="year"></span> Yusuf Hasan</p>
     </div>
   </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
