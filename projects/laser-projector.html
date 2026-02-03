@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2-DoF Laser Projector System | Yusuf Hasan</title>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="topbar">
+        <div>
+          <h1>2-DoF Laser Projector System</h1>
+          <p class="subtitle">Embedded control • SystemVerilog logic • ESP32 firmware • PID</p>
+        </div>
+        <nav class="nav">
+          <a href="../index.html#projects">← Back</a>
+          <a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="card">
+        <h3>Overview</h3>
+        <p>
+          Collaborated on a 2-DoF motor-controlled laser projection system capable of rendering still images
+          and animations. The system combined embedded firmware on an ESP32 with digital logic in SystemVerilog
+          to support closed-loop control and timing-accurate coordination.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Challenges</h3>
+          <ul class="bullets">
+            <li>Achieve stable closed-loop motor control</li>
+            <li>Coordinate real-time timing between MCU and logic</li>
+            <li>Produce repeatable projection trajectories</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>System</h3>
+          <ul class="bullets">
+            <li>ESP32 firmware with ISR-based scheduling</li>
+            <li>SPI link to digital logic decoder</li>
+            <li>2-axis actuation + trajectory generation</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Outcome</h3>
+          <ul class="bullets">
+            <li>Projected multiple animations in real time</li>
+            <li>Implemented PID control loop tuning</li>
+            <li>Validated end-to-end system integration</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>What you can show (portfolio-safe)</h3>
+        <ul class="bullets">
+          <li>High-level block diagram: trajectory → controller → motors → feedback</li>
+          <li>Timing diagram: ISR cadence, SPI transactions, control updates</li>
+          <li>PID tuning notes: step response, overshoot/settling improvements</li>
+          <li>Short demo video or gif of projected shapes/animations</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Evidence (add later)</h3>
+        <ul class="bullets">
+          <li>System photos (laser/motors/controller)</li>
+          <li>Logic diagram or FSM summary (SystemVerilog)</li>
+          <li>Plots: command vs measured position, error vs time</li>
+          <li>Brief README: how to run + key design decisions</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Yusuf Hasan</p>
+    </div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
