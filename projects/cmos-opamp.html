@@ -14,7 +14,7 @@
         <div>
           <h1>Two-Stage CMOS Operational Amplifier</h1>
           <p class="subtitle">
-            45 nm CMOS • fully differential + CMFB • stability and transient verification
+            45 nm CMOS • fully differential first stage • CMFB • stability-verified
           </p>
         </div>
         <nav class="nav">
@@ -32,48 +32,62 @@
       <div class="card">
         <h3>Overview</h3>
         <p>
-          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using Cadence Virtuoso.
-          The design consists of a fully differential first stage with common-mode feedback (CMFB), followed by
-          a common-source second stage to achieve high gain and wide bandwidth under strict stability constraints.
+          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using
+          Cadence Virtuoso. The design targets high open-loop gain, wide unity-gain bandwidth,
+          and stable closed-loop operation under tight power and loading constraints.
         </p>
         <p>
-          The amplifier was verified through DC operating point analysis, open- and closed-loop frequency response,
-          and large-signal transient simulations.
+          The amplifier consists of a fully differential first stage with common-mode feedback (CMFB),
+          followed by a single-ended second stage. Performance was verified through DC operating
+          point analysis, small-signal frequency response, and large-signal transient simulations.
         </p>
       </div>
 
-      <!-- ARCHITECTURE -->
-     <div class="card">
-  <h3>Overall Topology</h3>
+      <!-- TOPOLOGY -->
+      <div class="card">
+        <h3>Overall Topology</h3>
+        <p>
+          The selected architecture is a two-stage CMOS operational amplifier. The fully differential
+          first stage provides high gain and common-mode rejection, while an explicit CMFB loop
+          stabilizes the output common-mode voltage. A common-source second stage increases output
+          swing and drives the load.
+        </p>
 
-  <p>
-    The amplifier follows a two-stage CMOS operational amplifier topology consisting of a
-    fully differential first stage with common-mode feedback (CMFB), followed by a
-    single-ended common-source second stage. This structure was selected to achieve
-    high open-loop gain, wide bandwidth, and robust closed-loop stability.
-  </p>
+        <img
+          src="images/OPAMP_topology.png"
+          alt="Overall two-stage CMOS op-amp topology"
+          class="evidence-image"
+        >
 
-  <img
-    src="images/OPAMP_topology.png"
-    alt="Overall two-stage CMOS op-amp topology"
-    class="evidence-image"
-  >
+        <p>
+          This topology enables high DC gain while maintaining sufficient phase margin when
+          configured in a unity-gain feedback configuration.
+        </p>
+      </div>
 
-  <p>
-    The first stage provides the majority of the voltage gain and common-mode rejection,
-    while the CMFB loop regulates the output common-mode voltage. The second stage
-    increases output swing and drives the load, enabling stable operation at unity gain.
-  </p>
-</div>
+      <!-- SCHEMATIC -->
+      <div class="card">
+        <h3>Circuit Implementation</h3>
+        <p>
+          The complete transistor-level schematic was implemented in Cadence Virtuoso using
+          low-voltage threshold devices. Careful device sizing and biasing were employed to
+          achieve the desired transconductance, output resistance, and pole locations.
+        </p>
 
+        <img
+          src="images/image.png"
+          alt="Two-stage CMOS op-amp schematic"
+          class="evidence-image"
+        >
+      </div>
 
-      <!-- BIASING AND OPERATING POINTS -->
+      <!-- BIASING -->
       <div class="card">
         <h3>Biasing and DC Operating Points</h3>
         <p>
-          DC operating point analysis was performed to ensure all transistors operate in the intended region
-          across the amplifier core and CMFB circuitry. Proper biasing is critical for achieving the desired
-          small-signal parameters and maintaining linear operation.
+          DC operating point analysis was performed to verify that all transistors operate in
+          the intended region of operation. Correct biasing is essential to ensure linearity,
+          predictable small-signal behavior, and robustness to process variation.
         </p>
 
         <div class="evidence-grid">
@@ -88,18 +102,18 @@
         </div>
 
         <p>
-          Extracted device parameters such as transconductance and output resistance were used to validate
-          hand calculations and confirm consistency with theoretical expectations.
+          Extracted small-signal parameters such as transconductance and output resistance were
+          compared against hand calculations to validate design assumptions.
         </p>
 
         <div class="evidence-grid">
           <img
             src="images/OPAMP_Component_Parameters.png"
-            alt="Op-amp component parameters"
+            alt="Op-amp device parameters"
           >
           <img
             src="images/CMFB_Component_Parameters.png"
-            alt="CMFB component parameters"
+            alt="CMFB device parameters"
           >
         </div>
       </div>
@@ -108,9 +122,9 @@
       <div class="card">
         <h3>Small-Signal Frequency Response</h3>
         <p>
-          Small-signal AC analysis was used to evaluate the open-loop gain, unity-gain bandwidth, and phase margin.
-          The open-loop response confirms sufficient DC gain and dominant pole behavior, while the closed-loop
-          response verifies stability when configured as a voltage follower.
+          Small-signal AC simulations were used to evaluate open-loop gain, pole-zero placement,
+          unity-gain bandwidth, and phase margin. The open-loop response confirms dominant-pole
+          behavior and sufficient DC gain.
         </p>
 
         <p><strong>Open-Loop Gain and Phase:</strong></p>
@@ -130,7 +144,7 @@
         <p>
           The amplifier achieves approximately <strong>47.5 dB DC gain</strong>,
           a <strong>616 MHz unity-gain bandwidth</strong>, and a
-          <strong>61° phase margin</strong>, satisfying the design targets.
+          <strong>61° phase margin</strong>, meeting the specified stability requirements.
         </p>
       </div>
 
@@ -138,9 +152,9 @@
       <div class="card">
         <h3>Transient and Large-Signal Performance</h3>
         <p>
-          Transient simulations were performed to assess large-signal behavior, including slew rate,
-          settling time, and stability under step inputs. These simulations confirm that the amplifier
-          remains stable and well-damped during dynamic operation.
+          Large-signal transient simulations were performed to evaluate slew rate, settling
+          behavior, and overall dynamic stability. The amplifier exhibits well-damped responses
+          to step inputs without oscillation.
         </p>
 
         <img
@@ -154,10 +168,11 @@
       <div class="card">
         <h3>Summary</h3>
         <ul class="bullets">
-          <li>Designed a two-stage CMOS op-amp with fully differential first stage and CMFB</li>
-          <li>Verified correct biasing and operating regions through DC analysis</li>
-          <li>Achieved high bandwidth and stable closed-loop operation</li>
-          <li>Validated large-signal performance via transient simulations</li>
+          <li>Designed a two-stage CMOS operational amplifier in a 45 nm process</li>
+          <li>Implemented a fully differential first stage with CMFB</li>
+          <li>Verified correct biasing and operating regions via DC analysis</li>
+          <li>Achieved wide bandwidth and stable unity-gain operation</li>
+          <li>Validated dynamic behavior through transient simulations</li>
         </ul>
       </div>
 
