@@ -199,3 +199,23 @@ code {
   border-radius: 8px;
   color: var(--text);
 }
+.evidence-image {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-top: 10px;
+}
+
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.evidence-grid img {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
