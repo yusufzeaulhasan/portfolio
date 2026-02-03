@@ -5,6 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Two-Stage CMOS Operational Amplifier | Yusuf Hasan</title>
   <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- Page-local styles for the performance table -->
+  <style>
+    .perf-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .perf-table th, .perf-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    .perf-table th {
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      font-weight: 700;
+    }
+    .perf-table td {
+      color: var(--text);
+    }
+    .perf-table tr:last-child td { border-bottom: none; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,14 +66,14 @@
       <div class="card">
         <h3>Overview</h3>
         <p>
-          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using
-          Cadence Virtuoso. The design targets high open-loop gain, wide unity-gain bandwidth,
-          and stable closed-loop operation under tight power and loading constraints.
+          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using Cadence Virtuoso.
+          The design targets high open-loop gain, wide unity-gain bandwidth, and stable closed-loop operation.
+          The amplifier consists of a fully differential first stage with common-mode feedback (CMFB), followed by
+          a single-ended second stage.
         </p>
         <p>
-          The amplifier consists of a fully differential first stage with common-mode feedback (CMFB),
-          followed by a single-ended second stage. Performance was verified through DC operating
-          point analysis, small-signal frequency response, and large-signal transient simulations.
+          Performance was validated using DC operating point analysis, open- and closed-loop frequency response,
+          and large-signal transient simulations.
         </p>
       </div>
 
@@ -47,10 +81,9 @@
       <div class="card">
         <h3>Overall Topology</h3>
         <p>
-          The selected architecture is a two-stage CMOS operational amplifier. The fully differential
-          first stage provides high gain and common-mode rejection, while an explicit CMFB loop
-          stabilizes the output common-mode voltage. A common-source second stage increases output
-          swing and drives the load.
+          The amplifier follows a two-stage topology. The fully differential first stage provides high gain and
+          common-mode rejection. A dedicated CMFB loop regulates the output common-mode voltage. The second stage
+          is a common-source amplifier that increases output swing and improves load driving capability.
         </p>
 
         <img
@@ -60,18 +93,18 @@
         >
 
         <p>
-          This topology enables high DC gain while maintaining sufficient phase margin when
-          configured in a unity-gain feedback configuration.
+          This structure is widely used for high-speed, low-power operational amplifiers because it can achieve
+          strong gain-bandwidth tradeoffs while remaining stable at unity gain with proper compensation.
         </p>
       </div>
 
-      <!-- SCHEMATIC -->
+      <!-- CIRCUIT IMPLEMENTATION -->
       <div class="card">
         <h3>Circuit Implementation</h3>
         <p>
-          The complete transistor-level schematic was implemented in Cadence Virtuoso using
-          low-voltage threshold devices. Careful device sizing and biasing were employed to
-          achieve the desired transconductance, output resistance, and pole locations.
+          The complete transistor-level schematic was implemented in Cadence Virtuoso using low-voltage threshold
+          devices. Device sizing and bias currents were chosen to meet small-signal targets (gain, bandwidth, and
+          phase margin) while maintaining correct operating regions across the amplifier core and the CMFB network.
         </p>
 
         <img
@@ -85,9 +118,9 @@
       <div class="card">
         <h3>Biasing and DC Operating Points</h3>
         <p>
-          DC operating point analysis was performed to verify that all transistors operate in
-          the intended region of operation. Correct biasing is essential to ensure linearity,
-          predictable small-signal behavior, and robustness to process variation.
+          DC operating point simulations were used to verify that transistors operate in the intended region and
+          that the CMFB loop establishes the desired output common-mode level. Correct biasing is essential for
+          predictable small-signal behavior and robust closed-loop stability.
         </p>
 
         <div class="evidence-grid">
@@ -102,8 +135,8 @@
         </div>
 
         <p>
-          Extracted small-signal parameters such as transconductance and output resistance were
-          compared against hand calculations to validate design assumptions.
+          Extracted small-signal parameters (e.g., transconductance and output resistance) were reviewed to confirm
+          consistency with the intended operating point and to support hand-checks of gain and pole locations.
         </p>
 
         <div class="evidence-grid">
@@ -122,9 +155,9 @@
       <div class="card">
         <h3>Small-Signal Frequency Response</h3>
         <p>
-          Small-signal AC simulations were used to evaluate open-loop gain, pole-zero placement,
-          unity-gain bandwidth, and phase margin. The open-loop response confirms dominant-pole
-          behavior and sufficient DC gain.
+          Small-signal AC simulations were performed to evaluate open-loop gain, unity-gain bandwidth, and phase
+          margin. The open-loop response confirms the gain roll-off and phase behavior, while the closed-loop
+          configuration verifies stable unity-gain operation.
         </p>
 
         <p><strong>Open-Loop Gain and Phase:</strong></p>
@@ -140,11 +173,70 @@
           alt="Closed-loop Bode plot"
           class="evidence-image"
         >
+      </div>
 
+      <!-- ACHIEVED PERFORMANCE (HTML TABLE) -->
+      <div class="card">
+        <h3>Achieved Performance</h3>
         <p>
-          The amplifier achieves approximately <strong>47.5 dB DC gain</strong>,
-          a <strong>616 MHz unity-gain bandwidth</strong>, and a
-          <strong>61° phase margin</strong>, meeting the specified stability requirements.
+          Summary of achieved performance from DC, AC, and transient simulations for the final tuned design.
+        </p>
+
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th class="mono">Symbol</th>
+              <th>Achieved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Output Common-Mode</td>
+              <td class="mono">V<sub>CM</sub></td>
+              <td>0.4997 V</td>
+            </tr>
+            <tr>
+              <td>Total Power</td>
+              <td class="mono">P</td>
+              <td>0.39641 mW</td>
+            </tr>
+            <tr>
+              <td>CMFB Power</td>
+              <td class="mono">P<sub>CMFB</sub></td>
+              <td>12.278 µW</td>
+            </tr>
+            <tr>
+              <td>Differential Output Swing</td>
+              <td class="mono">V<sub>out,diff</sub></td>
+              <td>0.5 V</td>
+            </tr>
+            <tr>
+              <td>Low-Frequency Gain</td>
+              <td class="mono">A<sub>0</sub></td>
+              <td>47.5097 dB</td>
+            </tr>
+            <tr>
+              <td>Unity-Gain Frequency</td>
+              <td class="mono">f<sub>u</sub></td>
+              <td>616.613 MHz</td>
+            </tr>
+            <tr>
+              <td>Phase Margin</td>
+              <td class="mono">PM</td>
+              <td>≈ 61.143°</td>
+            </tr>
+            <tr>
+              <td>Slew Rate</td>
+              <td class="mono">SR</td>
+              <td>28.79 V/µs</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="note">
+          Note: Values are reported from simulation results and depend on the testbench configuration
+          (loading, feedback connection, input stimulus) and process assumptions.
         </p>
       </div>
 
@@ -152,9 +244,9 @@
       <div class="card">
         <h3>Transient and Large-Signal Performance</h3>
         <p>
-          Large-signal transient simulations were performed to evaluate slew rate, settling
-          behavior, and overall dynamic stability. The amplifier exhibits well-damped responses
-          to step inputs without oscillation.
+          Large-signal transient simulations were used to evaluate dynamic behavior including slew response and
+          settling characteristics. The response indicates stable behavior without sustained oscillation when
+          subjected to step-like inputs.
         </p>
 
         <img
@@ -169,10 +261,10 @@
         <h3>Summary</h3>
         <ul class="bullets">
           <li>Designed a two-stage CMOS operational amplifier in a 45 nm process</li>
-          <li>Implemented a fully differential first stage with CMFB</li>
-          <li>Verified correct biasing and operating regions via DC analysis</li>
-          <li>Achieved wide bandwidth and stable unity-gain operation</li>
-          <li>Validated dynamic behavior through transient simulations</li>
+          <li>Implemented a fully differential first stage with dedicated CMFB regulation</li>
+          <li>Verified operating regions via DC analysis and extracted device parameters</li>
+          <li>Demonstrated stable unity-gain operation with wide bandwidth and solid phase margin</li>
+          <li>Validated large-signal behavior through transient simulation</li>
         </ul>
       </div>
 
