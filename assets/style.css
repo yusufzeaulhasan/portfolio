@@ -218,4 +218,9 @@ code {
   border-radius: 12px;
   border: 1px solid var(--line);
 }
-
+.evidence-video {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  margin-top: 12px;
+}
