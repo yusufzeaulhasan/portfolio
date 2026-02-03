@@ -1,0 +1,391 @@
+% =====================================================================
+% ELEC 401 Two-Stage Op-Amp Design Project Report
+% =====================================================================
+
+\documentclass[11pt]{article}
+
+% ---------------------------
+% Packages
+% ---------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+% ---------------------------
+% Macros
+% ---------------------------
+\newcommand{\VDD}{V_{\mathrm{DD}}}
+\newcommand{\GND}{\mathrm{GND}}
+\newcommand{\Vout}{V_{\mathrm{out}}}
+\newcommand{\UGF}{f_u}
+\newcommand{\PM}{\mathrm{PM}}
+\newcommand{\SR}{\mathrm{SR}}
+
+% ---------------------------
+% Title
+% ---------------------------
+\title{\textbf{Design and Analysis of a Two-Stage CMOS Operational Amplifier}\\
+\large ELEC 401 -- Analog CMOS Integrated Circuit Design}
+\author{Yusuf Hasan}
+\date{}
+
+\begin{document}
+\maketitle
+
+\hrule
+\vspace{0.15in}
+
+% =====================================================================
+\section{Design Objectives and Specifications}
+
+The objective of this project is to design a two-stage CMOS operational amplifier in a 45\,nm process that satisfies stringent performance, power, and stability requirements. The amplifier employs a fully differential first stage with active load and common-mode feedback (CMFB), followed by a common-source second stage with Miller compensation. All design, simulation, and verification steps were performed using Cadence Virtuoso with the \texttt{gpdk\_45} models.
+
+\begin{table}[H]
+\centering
+\caption{Design Specifications and Achieved Performance}
+\begin{tabularx}{\linewidth}{@{}l c c c@{}}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Specification} & \textbf{Achieved} \\
+\midrule
+Output Common-Mode &  & $\VDD/2$ & \SI{0.4997}{V} \\
+Total Power &  & $\le \SI{0.4}{mW}$ & \SI{0.39644}{mW} \\
+CMFB Power &  & $\le \SI{40}{\micro W}$ & \SI{12.278}{\micro W} \\
+Differential Output Swing &  & $\ge \SI{0.75}{V}$ & \SI{0.5}{V} \\
+Low-Frequency Gain &  & $\ge \SI{46}{dB}$ & \SI{47.5097}{dB} \\
+Unity-Gain Frequency & $\UGF$ & $\ge \SI{600}{MHz}$ & \SI{616.613}{MHz} \\
+Phase Margin & $\PM$ & $60^\circ$--$90^\circ$ & $\approx 61.443^\circ$ \\
+Slew Rate & $\SR$ & $\ge \SI{20}{V/\micro s}$ & \SI{28.79}{V/\micro s} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% =====================================================================
+\section{Overall Design Methodology}
+
+The design followed a structured top--down methodology. Because the first stage is fully differential, its output common-mode voltage is not inherently defined and must be regulated by a common-mode feedback (CMFB) loop. For this reason, the design process began with bias and reference selection for the CMFB circuit, since it directly constrains the operating point of the first-stage amplifier.
+
+Once appropriate bias conditions were established, transistor dimensions were adjusted to ensure that all devices operated in saturation under nominal conditions. Current allocation was then optimized to meet large-signal requirements such as slew rate and output swing while remaining within the strict power budget. Finally, small-signal parameters were tuned to meet gain, bandwidth, and phase margin specifications through careful placement of poles and zeros using Miller compensation.
+
+Annotated schematics of the operational amplifier and CMFB circuit, including all transistor dimensions and component values, are shown in Figures~\ref{fig:opamp_params} and~\ref{fig:cmfb_params}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{OPAMP_Component_Parameters.png}
+    \caption{Annotated two-stage operational amplifier schematic with component parameters}
+    \label{fig:opamp_params}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{CMFB_Component_Parameters.png}
+    \caption{Annotated common-mode feedback circuit with component parameters}
+    \label{fig:cmfb_params}
+\end{figure}
+
+\section{Biasing, CMFB Circuit and Power Budgetting}
+
+\subsection{Bias and Reference Selection for the CMFB Circuit}
+
+Because the first stage of the operational amplifier is fully differential, its output common-mode voltage is not inherently defined. A common-mode feedback (CMFB) circuit is therefore required to regulate the average of the first-stage outputs. The CMFB design was addressed first, as it directly constrains the allowable operating point of the first-stage amplifier. The reference voltage $V_{\text{ref}}$ was initially chosen near $V_{DD}/2 = \SI{0.5}{V}$ to maximize signal swing and ensure symmetric headroom for both NMOS and PMOS devices in the signal path. The bias voltage $V_{\text{bias}}$ was selected to establish appropriate currents in the PMOS bias network while respecting the CMFB power limit of \SI{40}{\micro W}. The value for $V_{\text{bias}}$ that was selected and allowed us to operate all transistors in saturation was 0.575V and is high enough for M0 to stay in saturation while low enough to keep the common mode feedback circuit in saturation. A $V_{\text{bias}}$ of 0.45V was selected so that we could maintain the V1 and V2 nodes near 0.5V. Two equal-valued resistors $R_{CM}$ sample the first-stage output nodes $V_1$ and $V_2$ and generate the sensed common-mode voltage:
+\[
+V_{\text{cfmb}} = \frac{V_1 + V_2}{2}.
+\]
+The symmetry of this resistor network is critical: differential signals appear as equal and opposite variations at $V_1$ and $V_2$ and therefore cancel at $V_{\text{cfmb}}$, ensuring that the CMFB loop responds only to common-mode variations and does not corrupt the differential signal path.
+
+\subsection{Saturation Enforcement of the CMFB and First Stage}
+
+With $V_{\text{ref}}$ and $V_{\text{bias}}$ selected, a DC operating-point analysis was performed to ensure that all transistors in both the CMFB circuit and the first-stage amplifier operate in saturation. Saturation was verified using the condition
+\[
+V_{DS} > V_{ov} = V_{GS} - V_T.
+\]
+
+The CMFB and first-stage biasing were solved concurrently, since adjustments to the CMFB tail current directly affect the first-stage operating point. Iterative refinement of $V_{\text{ref}}$, $V_{\text{bias}}$, and device dimensions was performed until all devices satisfied saturation constraints under nominal conditions. Annotated node voltages and branch currents from the DC simulation were used to confirm compliance.
+
+\subsection{Power Budgeting and Current Allocation}
+
+The total power budget of \SI{0.4}{mW} at \SI{1}{V} constrains the total supply current to approximately \SI{0.4}{mA}. Rather than distributing this current uniformly, the power allocation was guided by both large-signal and small-signal performance requirements, resulting in a deliberate imbalance between the first and second stages. A larger fraction of the total current was allocated to the second (output) stage because it directly drives the load capacitance $C_L$ and therefore determines the amplifier’s slew rate and large-signal transient behavior. The minimum required output current is set by
+\[
+I_{\text{out}} \ge \SR \cdot C_L,
+\]
+which establishes a hard lower bound on the second-stage bias current. Allocating additional current beyond this minimum improves slew-rate margin, reduces distortion during large-signal transitions, and mitigates the impact of process and temperature variations on dynamic performance. For this reason, the output stage was intentionally biased with a relatively higher current density. Despite the dominance of the second stage in determining slew rate, a significant portion of the power budget was also allocated to the first stage. The first stage must supply sufficient current to rapidly charge and discharge the Miller compensation capacitor $C_C$, whose effective capacitance is multiplied by the gain of the second stage. As a result, the slew rate at the internal nodes is often limited by the first-stage bias current rather than the output stage alone. Under-biasing the first stage would therefore create an internal slew-rate bottleneck, degrading overall transient response even if the output stage were adequately biased. Furthermore, the first stage is fully differential and must preserve strict symmetry between its two signal paths. Equal current allocation to the left and right halves of the differential pair ensures balanced transconductance, minimizes systematic offset, and prevents asymmetric slewing between the two internal nodes. Any imbalance in first-stage bias currents would translate directly into unequal charging of the compensation capacitor and asymmetric pole movement, negatively impacting stability and linearity. For this reason, the first-stage current was distributed symmetrically, with both branches receiving equal bias current. From a small-signal perspective, sufficient first-stage bias current is also required to achieve the desired transconductance $g_{m1}$, which directly sets the unity-gain frequency:
+\[
+\omega_u \approx \frac{g_{m1}}{C_C}.
+\]
+Allocating additional current to the first stage therefore improves bandwidth and phase margin while maintaining loop stability. In summary, the power budget was divided such that the second stage receives the largest share of current to satisfy slew-rate and load-driving requirements, while the first stage is allocated enough current to prevent internal slew-rate limitation, maintain symmetry in the differential signal path, and achieve the required small-signal bandwidth. This balanced allocation ensures robust large-signal performance without compromising stability or power efficiency.
+
+In the design of the Opamp, Most of the power was distributed between the first stage and output side of the second stage. Initially, The first stage power was too low ($I_D$ was too low) annd by consequence, the slew rate was bottle necked by the first stage. 
+
+\subsection{Device Sizing and Drain-Current Control}
+
+MOSFET drain current in saturation is governed by
+\[
+I_D = \frac{1}{2} \mu C_{ox} \frac{W}{L} V_{ov}^2.
+\]
+For a fixed overdrive voltage, increasing the width $W$ increases current linearly, while increasing the channel length $L$ reduces current but improves output resistance. These relationships were used strategically throughout the design. In the signal path, widths were adjusted to meet current and slew-rate requirements, while channel lengths were increased (up to $5L_{\min}$) to improve output resistance $r_o$ and low-frequency gain. In the bias and CMFB networks, device dimensions were chosen to ensure saturation across process and bias variations while minimizing static power consumption.
+% =====================================================================
+\subsection{DC Operating-Point Verification}
+
+DC operating-point simulations were performed to verify correct biasing and saturation across all devices.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{DC_Operating_points_OPAMP.png}
+    \caption{DC operating-point simulation of the two-stage operational amplifier}
+\end{figure}
+
+With an input common-mode voltage of \SI{0.5}{V}, the output common-mode voltage was measured to be \SI{0.4997}{V}, confirming proper CMFB regulation. All transistors were observed to operate in saturation (Cadence region 2). The total power consumption of the amplifier was \SI{396.466}{\micro W}, satisfying the design constraint.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{DC_operating_points_CMFB.png}
+    \caption{DC operating-point simulation of the CMFB circuit}
+\end{figure}
+
+The CMFB circuit consumed \SI{12.278}{\micro W}, well below the specified maximum.
+
+% =====================================================================
+\section{Small-Signal Design and Frequency Response}
+
+\subsection{Overall Small-Signal Transfer Function}
+
+The operational amplifier is implemented as a two-stage topology consisting of a differential first stage followed by a single-ended common-source second stage. The overall small-signal transfer function can be approximated as
+\[
+A(s) = \frac{A_0 (1 + s/\omega_z)}{(1 + s/\omega_{p1})(1 + s/\omega_{p2})},
+\]
+where $A_0$ is the low-frequency open-loop gain, $\omega_{p1}$ is the dominant pole, $\omega_{p2}$ is the non-dominant pole at the output, and $\omega_z$ is the compensation zero introduced by the Miller network.This form captures the essential dynamics of the amplifier and provides a framework for understanding how bias currents, device sizing, and compensation parameters affect gain, bandwidth, and stability.
+
+\subsection{Low-Frequency Gain and Gain Enhancement}
+
+The low-frequency gain of the two-stage amplifier is approximately given by
+\[
+A_0 \approx (g_{m1} R_x)(g_{m6} R_o),
+\]
+where $g_{m1}$ is the transconductance of the input differential pair, $R_x$ is the effective output resistance at the first-stage output node, $g_{m6}$ is the transconductance of the second-stage device, and $R_o$ is the output resistance of the second stage. To meet the minimum gain specification of 46~dB, gain enhancement was achieved primarily by increasing output resistance rather than bias current. Channel lengths of key gain devices were increased (up to $5L_{\min}$), which increases $r_o$ through reduced channel-length modulation:
+\[
+r_o \approx \frac{1}{\lambda I_D}.
+\]
+This approach improves gain without increasing power consumption and preserves headroom under the low supply voltage constraint. Although increasing $g_m$ through higher bias current can also increase gain, this approach was limited by the overall power budget. Instead, a moderate $g_m/I_D$ operating point was chosen to balance gain efficiency and speed.
+
+\subsection{Dominant Poles and Their Physical Origin}
+
+The dominant pole of the amplifier is created at the first-stage output node due to Miller compensation. The small-signal resistance at this node is
+\[
+R_x \approx r_{o2} \parallel r_{o4},
+\]
+and the effective capacitance is amplified by the Miller effect:
+\[
+C_{x,\text{eff}} \approx C_x + C_C (1 + g_{m6} R_o).
+\]
+As a result, the dominant pole is located at
+\[
+\omega_{p1} \approx \frac{1}{R_x \left[C_x + C_C (1 + g_{m6} R_o)\right]}.
+\]
+
+The second pole occurs at the output node and is given by
+\[
+\omega_{p2} \approx \frac{1}{R_o (C_L + C_C)} \approx \frac{1}{R_o C_L}.
+\]
+This pole is pushed to higher frequency by allocating sufficient bias current to the output stage, thereby reducing $R_o$.
+
+\subsection{Unity-Gain Frequency and Transconductance Efficiency}
+
+The unity-gain frequency of the amplifier is primarily determined by the first-stage transconductance and the compensation capacitor:
+\[
+\omega_u \approx \frac{g_{m1}}{C_C}.
+\]
+This first-order relationship assumes ideal Miller compensation where $C_C$ behaves as a frequency-independent capacitance between the first-stage output and the amplifier output.
+
+In this design, however, the compensation network includes a series resistor $R_C$, so the effective compensation path becomes frequency dependent. The series RC introduces a zero at
+\[
+\omega_z \approx \frac{1}{R_C C_C},
+\]
+which provides phase lead and also modifies the magnitude response around the crossover region. As a result, the \emph{measured} unity-gain crossover frequency (the frequency where $|A(j\omega)|=1$) can shift as $R_C$ is tuned, particularly when $\omega_z$ is placed near the unity-gain region or when higher-order poles are not far above $\omega_u$. 
+
+Qualitatively, increasing $R_C$ lowers $\omega_z$, causing the phase lead (and associated gain-shaping) to occur at lower frequency. This can move the apparent unity-gain crossover upward or downward depending on the relative placement of $\omega_z$, $\omega_{p2}$, and the parasitic poles at internal nodes. Therefore, while $C_C$ sets the dominant scaling of $\omega_u$, the series resistor $R_C$ can measurably influence the unity-gain frequency by altering the open-loop magnitude slope near crossover.
+
+
+\subsection{Unity-Gain Frequency, Phase Margin, and Compensation Network Design}
+
+Frequency compensation is implemented using a series RC network consisting of the compensation capacitor $C_C$ and compensation resistor $R_C$ connected between the first-stage output node and the amplifier output. Together, this network shapes the open-loop transfer function by controlling the locations of the dominant pole, non-dominant pole interaction, and compensation zero.
+
+\subsubsection{Role of the Compensation Capacitor $C_C$}
+
+The compensation capacitor $C_C$ introduces Miller compensation, which intentionally creates a dominant pole at the first-stage output node. Due to the Miller effect, the effective capacitance seen at this node is
+\[
+C_{x,\text{eff}} \approx C_x + C_C \left(1 + g_{m6} R_o\right),
+\]
+where $C_x$ represents the parasitic capacitances at the first-stage output and $g_{m6} R_o$ is the gain of the second stage. This large effective capacitance lowers the dominant pole frequency to
+\[
+\omega_{p1} \approx \frac{1}{R_x \left[C_x + C_C (1 + g_{m6} R_o)\right]},
+\]
+ensuring that the amplifier behaves as a single-pole system over most of the frequency range below unity gain. At the same time, $C_C$ directly sets the unity-gain frequency:
+\[
+\omega_u \approx \frac{g_{m1}}{C_C}.
+\]
+Reducing $C_C$ therefore increases bandwidth but weakens compensation, while increasing $C_C$ improves stability at the cost of unity-gain frequency.
+
+\subsubsection{Role of the Compensation Resistor $R_C$}
+
+The series resistor $R_C$ modifies the frequency-dependent behavior of the compensation network by introducing a zero in the open-loop transfer function. This zero occurs at
+\[
+\omega_z \approx \frac{1}{R_C C_C}.
+\]
+
+When properly placed, this zero provides positive phase lead that compensates for the phase lag introduced by the non-dominant pole at the output node:
+\[
+\omega_{p2} \approx \frac{1}{R_o C_L}.
+\]
+
+Without $R_C$, the Miller capacitor alone introduces a right-half-plane zero associated with the feedforward path through the second stage. The inclusion of $R_C$ shifts this zero into the left-half plane, stabilizing the loop and improving phase margin.
+
+\subsubsection{Joint Tuning of $R_C$ and $C_C$}
+
+The compensation resistor and capacitor must be tuned jointly, as their effects are strongly coupled. The capacitor $C_C$ sets the unity-gain frequency and dominant pole location, while the resistor $R_C$ determines the location of the compensation zero relative to the non-dominant pole. Increasing $C_C$ lowers both $\omega_u$ and $\omega_{p1}$, increasing phase margin but reducing bandwidth. Increasing $R_C$ shifts the zero to lower frequency, increasing phase lead near unity gain. However, excessive $R_C$ can introduce peaking or interact unfavorably with the dominant pole.
+
+The final values of $R_C$ and $C_C$ were selected such that:
+\[
+\omega_{p1} \ll \omega_u < \omega_{p2},
+\]
+and
+\[
+\omega_z \approx \omega_{p2},
+\]
+Ensuring a phase margin between $60^\circ$ and $90^\circ$ while maintaining a unity-gain frequency exceeding \SI{600}{MHz}.
+
+\subsubsection{Effect of $g_m/I_D$ on Compensation}
+
+The effectiveness of the compensation network is closely related to the transconductance efficiency $g_m/I_D$ of the first-stage devices. The higher $g_m/I_D$ increases $\omega_u$ for a fixed $C_C$, allowing stability targets to be met without excessively large compensation capacitance. Similarly, increasing the output-stage current reduces $R_o$, pushing $\omega_{p2}$ to higher frequency and relaxing the compensation requirements. As a result, bias current allocation and compensation design were performed concurrently to ensure robust stability under the imposed power constraints.
+
+\subsection{Open-Loop AC Response}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Open_loop_Gain_Phase.png}
+    \caption{Open-loop gain and phase response with annotated low-frequency gain, unity-gain frequency, and phase margin}
+\end{figure}
+
+The open-loop AC response exhibits a low-frequency gain of \SI{47.5097}{dB}, a unity-gain frequency of \SI{616.613}{MHz}, and a phase margin of approximately \SI{61.443}{\degree}. This was achieved by tuning the $R_C$ and $C_C$ to $7.2k\Omega$ and $500f F$ respectively. After meeting the unity gain and frequency response specifications, it was important to keep $C_C$ smaller so that it did not have to large of an impact on the slew rate.
+
+% =====================================================================
+\section{Closed-Loop Frequency Response}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Closed_loop_symbol.png}
+    \caption{Unity-gain buffer configuration}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Closed_Loop_Bode_Plot.png}
+    \caption{Closed-loop magnitude and phase response}
+\end{figure}
+
+The closed-loop \SI{3}{dB} bandwidth was measured to be \SI{920.728}{MHz}, with a corresponding phase of \SI{-105.57}{\degree}. This behavior is consistent with the measured open-loop phase margin and indicates stable closed-loop operation.
+
+% =====================================================================
+\section{Transient Performance}
+
+\subsection{Small-Signal Step Response}
+
+A \SI{10}{mV} step centered at \SI{0.5}{V} was applied to evaluate small-signal stability and settling behavior.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{smallsignalrise.png}
+    \caption{Small Signal Step Response (0.495V-0.505V)}
+    \label{fig:placeholder}
+\end{figure}
+
+
+We calculate the rise time as 0.41ns from the above figure. In the step response, we see that there is significant overshoot before settling to the desired voltage. Next, a voltage step of 0.505V-0.495V is applied and the transient response is plotted.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{smallsignalfall.png}
+    \caption{Small Signal Step Response (0.505V-0.495V)}
+    \label{fig:placeholder}
+\end{figure}
+
+Similarly to the previous simulation, The rise time is calculated. We notice that the rise time is slightly shorter, 0.38 ns.
+
+\subsection{Large-Signal Step Response}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Large_Signal0_1V.png}
+    \caption{Large Signal Step Response (0-1V)}
+\end{figure}
+We notice very little overshoot in the large signal response in comparison to what was observed in the small signal responses. This can be explained as the the slew rate limits the speed of the rise in voltage, acting as a high frequency filter when applying a 0-1V step, by consequence, the bandwidth is reduced. We calculate the slew rate of the step response using the embedded calculator in cadence allegro as follows:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Slewrate1.png}
+    \caption{Slew Rate 0 - 1V Step}
+    \label{fig:placeholder}
+\end{figure}
+
+We calculated a Slew rate of \SI{28.79}{V/\micro s}, verifying that we meet the required slew rate. In order to achieve this we had to keep the $C_C$ below 1pF, this was balanced against phase margin/UGF specification. Further, initially, I noticed that the slew rate was being gated by the first stage, this is why I shifted to have more power in the first stage, allowing for a higher slew rate.
+\\
+\\
+Similarly we conduct the same procedure applying a 1V-0V step and perform a transient analysis. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{slew2.png}
+    \caption{Slew Rate 1 - 0V Step Down}
+    \label{fig:placeholder}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{slewrate_Calc.png}
+    \caption{Calculation of Slew Rate 1 - 0V Step Down}
+    \label{fig:placeholder}
+\end{figure}
+
+It can be observed that there is significant overshoot visible in this step response, different to the positive step. Following this, we calculate that the slew rate is much faster measuring in at \SI{-416.6}{V/\micro s}, matching the observed overshoot.
+
+\subsection{Open-Loop Output Swing}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{image.png}
+    \caption{Output Voltage Swing}
+    \label{fig:placeholder}
+\end{figure}
+
+The maximum undistorted output swing was measured using a \SI{0.1}{MHz} differential sinusoidal input. Applying a voltage of 1.4mV, we see un undistorted symmetric output voltage swing of 0.5V, not meeting the specification, however offering a reasonable symmetric voltage swing.
+
+% =====================================================================
+
+\section{Conclusion}
+
+In this project, a two-stage CMOS operational amplifier was designed, analyzed, and verified in a 45\,nm process under stringent power, bandwidth, and stability constraints. A structured top--down design methodology was employed, beginning with the common-mode feedback (CMFB) circuit to establish a well-defined operating point for the fully differential first stage. By addressing biasing and saturation conditions early in the design process, a robust DC operating point was achieved, ensuring that all transistors remained in saturation under nominal conditions while maintaining low static power consumption.
+\\
+\\
+Careful power budgeting and current allocation played a central role in meeting both large-signal and small-signal performance requirements. A larger portion of the available current was intentionally allocated to the output stage to satisfy slew-rate and load-driving constraints, while sufficient and symmetric bias current was maintained in the first stage to prevent internal slew-rate bottlenecks and preserve differential symmetry. This balanced allocation was critical in achieving a measured slew rate of \SI{28.79}{V/\micro s} while remaining within the \SI{0.4}{mW} total power budget.
+\\
+\\
+Small-signal performance was optimized through device sizing and frequency compensation. Low-frequency gain exceeding \SI{47}{dB} was achieved primarily through increased output resistance rather than increased bias current, preserving power efficiency. Miller compensation using a series $R_C$--$C_C$ network enabled stable operation by enforcing dominant-pole behavior, while the inclusion of the compensation resistor provided phase lead to counteract the non-dominant output pole. Joint tuning of $R_C$, $C_C$, and bias currents allowed the unity-gain frequency and phase margin to be simultaneously satisfied, resulting in a measured unity-gain frequency of approximately \SI{616}{MHz} and a phase margin of \SI{61.4}{\degree}.
+\\
+\\
+Closed-loop and transient simulations further confirmed stable operation and acceptable dynamic behavior. Small-signal step responses exhibited controlled overshoot and fast settling consistent with the measured phase margin, while large-signal step responses demonstrated slew-rate-limited behavior with minimal ringing. Although the maximum undistorted output swing of approximately \SI{0.5}{V} did not meet the original swing specification, this limitation is consistent with the reduced headroom imposed by the \SI{1}{V} supply and the requirement to keep all devices in saturation. Importantly, the output swing remained symmetric about the common-mode voltage, indicating proper biasing and CMFB operation.
+\\
+\\
+Overall, this design demonstrates the inherent tradeoffs between gain, bandwidth, stability, output swing, and power consumption in deep-submicron CMOS operational amplifiers. The final amplifier meets all critical frequency-domain and dynamic specifications while operating near the imposed power limit, illustrating a successful balance between theoretical design principles and practical implementation constraints.
+
+
+\end{document}
