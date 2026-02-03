@@ -1,97 +1,61 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Two-Stage CMOS Op-Amp | Yusuf Hasan</title>
-  <link rel="stylesheet" href="../assets/style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="container">
-      <div class="topbar">
-        <div>
-          <h1>Two-Stage CMOS Operational Amplifier</h1>
-          <p class="subtitle">Cadence Virtuoso • 45 nm • stability + performance verification</p>
-        </div>
-        <nav class="nav">
-          <a href="../index.html#projects">← Back</a>
-          <a href="../index.html#contact">Contact</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+<div class="card">
+  <h3>Evidence</h3>
 
-  <main class="container">
-    <section class="section">
-      <div class="card">
-        <h3>Overview</h3>
-        <p>
-          Designed and simulated a two-stage CMOS operational amplifier in a 45 nm process using Cadence Virtuoso.
-          Implemented a fully differential first stage with common-mode feedback (CMFB) and a common-source second stage.
-          Verified DC, AC, and transient performance including stability and slew behavior.
-        </p>
-      </div>
+  <!-- Architecture -->
+  <p><strong>Architecture:</strong> Two-stage CMOS operational amplifier with fully differential first stage and common-mode feedback (CMFB).</p>
+  <img
+    src="images_schematic.png"
+    alt="Two-stage CMOS op-amp schematic"
+    class="evidence-image"
+  >
 
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Target Specs</h3>
-          <ul class="bullets">
-            <li>High unity-gain bandwidth (UGB)</li>
-            <li>Reasonable phase margin for stability</li>
-            <li>Low power under process constraints</li>
-          </ul>
-        </div>
+  <!-- Open-loop -->
+  <p><strong>Open-Loop Performance:</strong> Open-loop gain and phase response used to verify stability margins.</p>
+  <img
+    src="images/open_loop_bode.png"
+    alt="Open-loop gain and phase plot"
+    class="evidence-image"
+  >
 
-        <div class="card">
-          <h3>Architecture</h3>
-          <ul class="bullets">
-            <li>Stage 1: fully differential input stage</li>
-            <li>CMFB loop for stable output common-mode</li>
-            <li>Stage 2: common-source gain stage</li>
-          </ul>
-        </div>
+  <!-- Closed-loop -->
+  <p><strong>Closed-Loop Performance:</strong> Closed-loop frequency response confirming unity-gain bandwidth and phase margin.</p>
+  <img
+    src="images/closed_loop_bode.png"
+    alt="Closed-loop Bode plot"
+    class="evidence-image"
+  >
 
-        <div class="card">
-          <h3>Results</h3>
-          <ul class="bullets">
-            <li>47.5 dB DC gain</li>
-            <li>616 MHz unity-gain frequency</li>
-            <li>61\u00B0 phase margin</li>
-          </ul>
-        </div>
-      </div>
+  <!-- DC operating points -->
+  <p><strong>DC Operating Points:</strong> Verification that all transistors operate in the intended region.</p>
+  <div class="evidence-grid">
+    <img
+      src="images/dc_op_points_opamp.png"
+      alt="DC operating points of op-amp core"
+    >
+    <img
+      src="images/dc_op_points_cmfb.png"
+      alt="DC operating points of CMFB circuit"
+    >
+  </div>
 
-      <div class="card">
-        <h3>Verification (what to show)</h3>
-        <ul class="bullets">
-          <li><strong>DC:</strong> bias points, operating regions, output swing</li>
-          <li><strong>AC:</strong> open-loop gain/phase, UGB, phase margin, poles/zeros</li>
-          <li><strong>Transient:</strong> step response, settling time, overshoot</li>
-          <li><strong>Slew:</strong> large-signal behavior under load</li>
-        </ul>
-        <p class="small-note">
-          Add screenshots of key plots (Bode, step response, slew) with brief captions.
-        </p>
-      </div>
+  <!-- Parameters -->
+  <p><strong>Device Parameters:</strong> Extracted small-signal parameters used for design verification.</p>
+  <div class="evidence-grid">
+    <img
+      src="images_params.png"
+      alt="Op-amp component parameters"
+    >
+    <img
+      src="images/cmfb_params.png"
+      alt="CMFB component parameters"
+    >
+  </div>
 
-      <div class="card">
-        <h3>Evidence (add later)</h3>
-        <ul class="bullets">
-          <li>Schematic + labeled stages (blur sensitive identifiers if needed)</li>
-          <li>Bode plot with UGB and phase margin annotated</li>
-          <li>Step response plot (small and large signal)</li>
-          <li>Table of final device sizes and bias currents (optional)</li>
-        </ul>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <p>© <span id="year"></span> Yusuf Hasan</p>
-    </div>
-  </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-</body>
-</html>
+  <!-- Transient -->
+  <p><strong>Large-Signal Transient Response:</strong> Step response demonstrating slew behavior, settling time, and stability.</p>
+  <img
+    src="images/transient_large_signal.png"
+    alt="Large-signal transient response"
+    class="evidence-image"
+  >
+</div>
