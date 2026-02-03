@@ -6,13 +6,16 @@
   <title>Hybrid Indoor Localization (IMU + UWB) | Yusuf Hasan</title>
   <link rel="stylesheet" href="../assets/style.css" />
 </head>
+
 <body>
   <header class="site-header">
     <div class="container">
       <div class="topbar">
         <div>
           <h1>Hybrid Indoor Localization (IMU + UWB)</h1>
-          <p class="subtitle">ESKF sensor fusion • asynchronous ranging • embedded implementation</p>
+          <p class="subtitle">
+            Error-State Kalman Filter • embedded sensor fusion • PCB + firmware co-design
+          </p>
         </div>
         <nav class="nav">
           <a href="../index.html#projects">← Back</a>
@@ -24,66 +27,114 @@
 
   <main class="container">
     <section class="section">
+
+      <!-- OVERVIEW -->
       <div class="card">
         <h3>Overview</h3>
         <p>
-          Built a real-time indoor localization system that fuses high-rate IMU data with UWB ranging updates
-          using an Error-State Kalman Filter (ESKF). The goal is robust tracking in GNSS-denied environments
-          with practical timing constraints and intermittent measurements.
+          Designed a real-time indoor localization system that fuses high-rate inertial measurements
+          with Ultra-Wideband (UWB) ranging using an Error-State Kalman Filter (ESKF). The system targets
+          robust positioning in GNSS-denied environments such as indoor robotics and warehouses.
+        </p>
+        <p>
+          The project spans embedded firmware, estimation theory, PCB design, and offline data analysis.
         </p>
       </div>
 
+      <!-- SYSTEM SUMMARY -->
       <div class="grid grid-3">
         <div class="card">
           <h3>Constraints</h3>
           <ul class="bullets">
-            <li>IMU runs faster than UWB (mixed-rate updates)</li>
-            <li>UWB ranges arrive asynchronously per anchor</li>
-            <li>Need stable estimation under packet drops/outliers</li>
+            <li>IMU prediction at higher rate than UWB updates</li>
+            <li>Asynchronous UWB range arrivals per anchor</li>
+            <li>Robustness to packet drops and noisy measurements</li>
           </ul>
         </div>
 
         <div class="card">
           <h3>Approach</h3>
           <ul class="bullets">
-            <li>Nominal state: position/velocity; attitude as quaternion</li>
-            <li>Error-state: \u03B4p, \u03B4v, \u03B4\u03B8 with ESKF updates</li>
-            <li>Per-measurement update: apply UWB correction as each range arrives</li>
+            <li>Nominal state propagation using IMU integration</li>
+            <li>Error-state formulation for stable linear updates</li>
+            <li>Sequential UWB measurement updates as ranges arrive</li>
           </ul>
         </div>
 
         <div class="card">
           <h3>System</h3>
           <ul class="bullets">
-            <li>4 anchors + mobile tag (UWB TWR ranging)</li>
-            <li>Embedded fusion loop with deterministic scheduling</li>
-            <li>Logging + offline evaluation in Python/MATLAB</li>
+            <li>MCU-based embedded platform</li>
+            <li>MEMS IMU + DWM3000 UWB module</li>
+            <li>Real-time logging and offline evaluation</li>
           </ul>
         </div>
       </div>
 
+      <!-- EVIDENCE SECTION -->
       <div class="card">
-        <h3>Implementation Details (what to show)</h3>
-        <ul class="bullets">
-          <li><strong>Filter loop:</strong> IMU predict at fixed rate; UWB update on arrival (one update per anchor range)</li>
-          <li><strong>Outlier handling:</strong> gating with innovation \u03C7\u00B2 threshold (or simple residual limit)</li>
-          <li><strong>Time alignment:</strong> timestamp each measurement; propagate to measurement time before update</li>
-          <li><strong>Outputs:</strong> position, velocity, attitude; optional bias states if you add them later</li>
-        </ul>
-        <p class="small-note">
-          If any details are sensitive, you can still share block diagrams, timing charts, and anonymized plots.
-        </p>
+        <h3>Evidence</h3>
+
+        <!-- Firmware -->
+        <p><strong>Firmware Architecture:</strong> High-level block diagram of the embedded sensor fusion firmware.</p>
+        <img
+          src="images/Block Diagram.png"
+          alt="Firmware block diagram"
+          class="evidence-image"
+        >
+
+        <!-- ESKF -->
+        <p><strong>Estimation:</strong> Error-State Kalman Filter structure used for IMU prediction and UWB correction.</p>
+        <img
+          src="images/ESKF.png"
+          alt="Error-State Kalman Filter diagram"
+          class="evidence-image"
+        >
+
+        <!-- PCB -->
+        <p><strong>Hardware:</strong> Custom PCB integrating MCU, MEMS IMU, and UWB module.</p>
+        <div class="evidence-grid">
+          <img
+            src="images/GetImage(2).png"
+            alt="2D PCB layout view"
+          >
+          <img
+            src="images/GetImage.png"
+            alt="3D PCB render"
+          >
+        </div>
+
+        <!-- Data -->
+        <p><strong>Sensor Data Processing:</strong> Example of raw and processed sensor data used in the fusion pipeline.</p>
+        <img
+          src="images/sonsors.png"
+          alt="Sensor data processing and fusion results"
+          class="evidence-image"
+        >
       </div>
 
+      <!-- IMPLEMENTATION DETAILS -->
       <div class="card">
-        <h3>Evidence (add later)</h3>
+        <h3>Implementation Details</h3>
         <ul class="bullets">
-          <li>Block diagram of IMU predict + UWB update</li>
-          <li>Room layout diagram (anchor positions + tag path)</li>
-          <li>Plots: position error vs time, residuals, update rate</li>
-          <li>Short video/gif of trajectory overlay (optional)</li>
+          <li>
+            <strong>Timing:</strong> IMU prediction runs at a fixed rate; UWB updates trigger filter
+            corrections upon reception.
+          </li>
+          <li>
+            <strong>State Representation:</strong> Position and velocity tracked in the nominal state;
+            attitude represented as a quaternion with small-angle error states.
+          </li>
+          <li>
+            <strong>Robustness:</strong> Measurement residuals monitored to reject outliers and unstable updates.
+          </li>
+          <li>
+            <strong>Analysis:</strong> Logged data evaluated offline to verify convergence, drift behavior,
+            and sensitivity to measurement noise.
+          </li>
         </ul>
       </div>
+
     </section>
   </main>
 
@@ -92,6 +143,9 @@
       <p>© <span id="year"></span> Yusuf Hasan</p>
     </div>
   </footer>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
