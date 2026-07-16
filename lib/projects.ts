@@ -93,6 +93,19 @@ export const projects: Project[] = [
           },
         ],
       },
+      {
+        heading: "Showcase",
+        paragraphs: [
+          "Presented as PL-206 at the UBC Electrical and Computer Engineering capstone showcase with our partner Bosch.",
+        ],
+        images: [
+          {
+            src: "/images/capstone-team.jpg",
+            alt: "The PL-206 team beside the Multi-Sensor Fusion poster at the UBC capstone showcase",
+            caption: "The PL-206 team at the capstone showcase",
+          },
+        ],
+      },
     ],
   },
   {
@@ -175,14 +188,21 @@ export const projects: Project[] = [
     year: "2025",
     summary:
       "A hardware RC4 stream-cipher accelerator implementing the KSA and PRGA across coordinated FSMs, with an automated brute-force system that sweeps 16.7 million keys using dual-port memory and pipelined state machines.",
-    plateImage: null,
-    plateAlt: "FPGA development board used for the RC4 accelerator",
+    plateImage: "/images/fpga-de1soc.jpg",
+    plateAlt: "Terasic DE1-SoC FPGA development board (Cyclone V)",
     platePlaceholder: "KSA → PRGA → 16.7M keys",
     sections: [
       {
         heading: "Overview",
         paragraphs: [
           "A hardware implementation of the RC4 stream cipher and an automated cryptanalysis engine, written in SystemVerilog and synthesized to an FPGA. The Key-Scheduling Algorithm (KSA) and Pseudo-Random Generation Algorithm (PRGA) run as coordinated finite-state machines sharing the cipher's S-array state.",
+        ],
+        images: [
+          {
+            src: "/images/fpga-de1soc.jpg",
+            alt: "Terasic DE1-SoC FPGA development board",
+            caption: "Terasic DE1-SoC — Cyclone V FPGA",
+          },
         ],
       },
       {

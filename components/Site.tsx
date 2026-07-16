@@ -177,30 +177,53 @@ function Hero() {
           </motion.nav>
         </div>
 
-        {/* Right — the hardware itself: HYLO Rev 1 */}
+        {/* Right — capstone showcase photo */}
         <motion.figure
           className="md:col-span-6"
           initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
-          <motion.div
-            className="overflow-hidden border hairline bg-white"
-            animate={reduce ? undefined : { y: [0, -10, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-          >
+          <div className="relative overflow-hidden border hairline bg-white">
             <Image
-              src={`${BASE}/images/hylo_3d.png`}
-              alt="3D render of HYLO Rev 1 — custom hybrid localization PCB with STM32, DWM3000 UWB module, and MEMS IMUs"
-              width={1336}
-              height={962}
+              src={`${BASE}/images/capstone-team.jpg`}
+              alt="The PL-206 capstone team beside the Multi-Sensor Fusion poster at the UBC showcase — Yusuf on the far left"
+              width={2880}
+              height={2160}
               priority
               className="h-auto w-full object-contain"
             />
-          </motion.div>
-          <figcaption className="label mt-4 flex justify-between">
-            <span>HYLO Rev 1 — hybrid localization unit</span>
-            <span className="hidden sm:block">STM32 · DWM3000 UWB · MEMS IMU</span>
+            {/* Arrow pointing me out */}
+            <svg
+              className="pointer-events-none absolute inset-0 h-full w-full"
+              viewBox="0 0 100 75"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <defs>
+                <marker id="me-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#0b0b0b" />
+                </marker>
+              </defs>
+              <path
+                d="M 29 11 Q 15.5 9 14 25"
+                fill="none"
+                stroke="#0b0b0b"
+                strokeWidth="0.6"
+                markerEnd="url(#me-arrow)"
+                vectorEffect="non-scaling-stroke"
+              />
+            </svg>
+            <span
+              className="label absolute border hairline bg-[#faf9f6] px-2 py-1 !text-[--ink]"
+              style={{ left: "30%", top: "10%" }}
+            >
+              Me
+            </span>
+          </div>
+          <figcaption className="label mt-4 flex justify-between gap-4">
+            <span>PL-206 — Multi-Sensor Fusion for Indoor Positioning</span>
+            <span className="hidden sm:block">UBC × Bosch capstone showcase</span>
           </figcaption>
         </motion.figure>
       </div>
