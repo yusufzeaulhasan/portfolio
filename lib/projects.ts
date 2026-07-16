@@ -94,6 +94,13 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "Demonstration",
+        paragraphs: [
+          "The system running live — real-time position estimates from fused IMU and UWB measurements.",
+        ],
+        video: { src: "/images/fusion-demo.mp4", caption: "Live localization demo" },
+      },
+      {
         heading: "Showcase",
         paragraphs: [
           "Presented as PL-206 at the UBC Electrical and Computer Engineering capstone showcase with our partner Bosch.",
