@@ -36,7 +36,7 @@ const experience = [
     place: "Vancouver",
     time: "Jun – Aug 2026",
     body:
-      "Sole engineer on a full-stack self-service configuration platform: Smithy-defined API, Java on AWS Lambda, a React + TypeScript SPA, and AWS CDK infrastructure — ~64 ms reads against a 500 ms SLO, 99+ tests.",
+      "Sole engineer on a self-service configuration platform adopted by 40+ clients — Smithy API, Java on Lambda, React + TypeScript SPA, AWS CDK infra. ~64 ms reads against a 500 ms p50 SLO.",
   },
   {
     role: "Undergraduate Research Assistant",
