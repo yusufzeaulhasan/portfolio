@@ -34,7 +34,7 @@ const experience = [
     role: "Software Development Engineer Intern",
     org: "Amazon",
     place: "Vancouver",
-    time: "2026 —",
+    time: "Jun – Aug 2026",
     body:
       "Sole engineer on a full-stack self-service configuration platform: Smithy-defined API, Java on AWS Lambda, a React + TypeScript SPA, and AWS CDK infrastructure — ~64 ms reads against a 500 ms SLO, 99+ tests.",
   },
@@ -50,7 +50,7 @@ const experience = [
     role: "Hardware Pre-Development Intern",
     org: "Robert Bosch GmbH",
     place: "Reutlingen, Germany",
-    time: "2024 – 25",
+    time: "Jun 2024 – Apr 2025",
     body:
       "STM32-based test PCBs, C firmware, and measurement methodology for characterizing next-generation MEMS inertial sensors — including offset g-sensitivity of gyroscopes via a modified rate-table approach.",
   },
@@ -58,7 +58,7 @@ const experience = [
     role: "Automation Intern",
     org: "Inter Pipeline",
     place: "Calgary",
-    time: "2023",
+    time: "May – Aug 2023",
     body:
       "Service-desk automation and a generative-AI chatbot on Azure, projected to save $150,000 per year.",
   },
