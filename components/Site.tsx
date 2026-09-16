@@ -105,7 +105,7 @@ function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
           >
-            Electrical Engineer — Vancouver, BC
+            UBC Electrical Engineering — Nov 2026
           </motion.p>
           <h1 className="font-display text-[15vw] leading-[0.82] tracking-[-0.02em] md:text-[7.5rem] lg:text-[8.5rem]">
             {["YUSUF", "HASAN"].map((line, i) => (
