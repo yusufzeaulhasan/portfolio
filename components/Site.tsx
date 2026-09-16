@@ -127,9 +127,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.6 }}
           >
-            Embedded systems, sensor fusion, robotics, and software — from MEMS
-            inertial sensors at Bosch to full-stack platforms at Amazon.
-            UBC Electrical Engineering, class of 2026.
+            University of British Columbia, Electrical Engineering (2026), with hands-on experience in embedded firmware, PCB design, sensors, and software development. Interested in controls, autonomous systems, and hardware-software co-design.
           </motion.p>
 
           {/* Contact + résumé, visible immediately */}
