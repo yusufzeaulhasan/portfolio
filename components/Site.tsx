@@ -220,7 +220,7 @@ function Hero() {
             </span>
           </div>
           <figcaption className="label mt-4 flex justify-between gap-4">
-            <span>PL-206 — Multi-Sensor Fusion for Indoor Positioning</span>
+            <span>PL-206 — Multi-Sensor Fusion Unit</span>
             <span className="hidden sm:block">UBC × Bosch capstone showcase</span>
           </figcaption>
         </motion.figure>

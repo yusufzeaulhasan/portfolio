@@ -26,7 +26,7 @@ export const projects: Project[] = [
   {
     slug: "multi-sensor-fusion",
     numeral: "I",
-    title: "Multi-Sensor Fusion for Indoor Positioning",
+    title: "Multi-Sensor Fusion Unit",
     medium: "UWB ranging · MEMS IMU · Error-State Kalman Filter · C · custom PCB",
     year: "2025 – 26",
     summary:
