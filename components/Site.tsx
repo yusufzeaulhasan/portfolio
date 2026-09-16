@@ -75,7 +75,7 @@ function Nav() {
         <div className="flex gap-8">
           {[
             ["Experience", "#experience"],
-            ["Work", "#work"],
+            ["Projects", "#work"],
             ["Contact", "#contact"],
           ].map(([t, h]) => (
             <a key={h} href={h} className="label !text-current link-line">{t}</a>
@@ -88,7 +88,7 @@ function Nav() {
 
 const heroIndex = [
   { num: "01", label: "Experience", href: "#experience" },
-  { num: "02", label: "Selected Work", href: "#work" },
+  { num: "02", label: "Projects", href: "#work" },
   { num: "03", label: "Contact", href: "#contact" },
 ];
 
@@ -234,7 +234,7 @@ function Work() {
     <section id="work" className="mx-auto max-w-[1400px] px-6 py-28 md:px-12 md:py-40">
       <Reveal>
         <div className="mb-20 flex items-end justify-between border-b hairline pb-6">
-          <h2 className="font-display text-5xl md:text-7xl">Selected Work</h2>
+          <h2 className="font-display text-5xl md:text-7xl">Projects</h2>
           <span className="label hidden md:block">Five plates</span>
         </div>
       </Reveal>
